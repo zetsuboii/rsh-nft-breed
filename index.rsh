@@ -39,7 +39,9 @@ const UserApiInterface = {
 
 const ViewInterface = {
   name: Bytes(32),
-  props: Array(UInt, 5)
+  props: Array(UInt, 5),
+  owner: Address,
+  price: Price
 };
 
 export const main = Reach.App(() => {
@@ -69,6 +71,10 @@ export const main = Reach.App(() => {
   const state = parallelReduce(initialState)
     .invariant(balance() == 0)
     .while(!state.burned)
+    .define(() => {
+      Views.owner.set(state.owner);
+      Views.price.set(state.price);
+    })
     .api(
       User.transferTo, 
       // Assumes
