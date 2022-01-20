@@ -2,4 +2,5 @@ reach
 .reach/**
 .vscode/**
 build/**
+creator-server-js/**
 creator-server/**

@@ -4,7 +4,7 @@ import { waitFor } from "./helpers.mjs";
 import { Participant } from "./participant.mjs";
 const stdlib = loadStdlib(process.env);
 
-let deployed=false, listed=false, transferred=false, readyToBurn=false;
+let deployed=false;
 
 /** @param {Participant} p */
 const creatorInterface = (p) => ({
@@ -32,6 +32,9 @@ const runAPIs = async ([creator, alice, bob]) => {
   
   await alice.call("User", "buy");
   console.log("Alice bought the NFT");
+
+  const props = await alice.view(null, "props").then(v => v.map(bn => bn.toNumber()));
+  console.log(props)
 
   console.log("Transfer to", bob.getAddress());
   await alice.call("User", "transferTo", bob.getAddress());
